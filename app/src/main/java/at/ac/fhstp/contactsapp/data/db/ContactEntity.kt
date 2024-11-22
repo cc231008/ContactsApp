@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//Entity - is a class that represents a table in your database
+//Entity - is a class that represents a table in your database.
 @Entity(tableName = "contacts")
 data class ContactEntity(
     @PrimaryKey(autoGenerate = true)
