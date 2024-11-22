@@ -15,21 +15,25 @@ data class ContactDetailUiState(
 )
 
 class ContactDetailViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle, //Provides a way to retrieve and save state information.
     private  val repository: ContactRepository) : ViewModel() {
 
+    //Retrieves the contact ID from the saved state
     private val contactId : Int = savedStateHandle["contactId"] ?: 0
 
+    //MutableStateFlow to hold the contact detail UI state
     private  val _contactDetailUiState = MutableStateFlow(ContactDetailUiState(
-        Contact(0, "", "", 0)
+        Contact(0, "", "", 0) //Default empty contact
     ))
+    //Publicly exposed StateFlow for observing the UI state
     val contactDetailUiState = _contactDetailUiState.asStateFlow()
 
+    //Initialization block to load contact details
     init {
         viewModelScope.launch {
-            val contact = repository.findContactById(contactId)
+            val contact = repository.findContactById(contactId) //Fetches contact by ID from the repository
             _contactDetailUiState.update {
-                it.copy(contact = contact)
+                it.copy(contact = contact) //Updates the UI state with the fetched contact
             }
         }
     }
