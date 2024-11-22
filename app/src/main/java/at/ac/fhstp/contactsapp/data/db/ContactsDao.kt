@@ -41,11 +41,12 @@ interface ContactsDao {
 }
 
 /*
-One-shot Write Queries - Insert, Update, and Delete operations that modify data in the database.
+!! WHEN WE SHOULD ADD suspend? !!
+1. One-shot Write Queries - Insert, Update, and Delete operations that modify data in the database.
 You need suspend here because it typically has a lot of operations.
 With suspend, they can be run on a background thread using coroutines, keeping the main thread free and avoiding potential freezes.
-One-shot Read Queries - Simple read operations that return data only once, not continuously observed.
+2. One-shot Read Queries - Simple read operations that return data only once, not continuously observed.
 You need suspend here because it typically has a lot of operations.
-Observable Read Queries - Continuous read operations that observe changes in the database and emit updates automatically whenever the data changes.
+3. Observable Read Queries - Continuous read operations that observe changes in the database and emit updates automatically whenever the data changes.
 These functions should not be marked as suspend because Flow and LiveData are already designed to operate asynchronously.
  */

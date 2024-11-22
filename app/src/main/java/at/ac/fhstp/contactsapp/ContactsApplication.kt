@@ -14,11 +14,13 @@ class ContactsApplication : Application() {
     val contactRepository by lazy {
         val contactsDao = ContactsDatabase.getDatabase(this).contactsDao()
 
+        //Retrofit is initialized with a base URL in the code bellow:
         val retrofit = Retrofit.Builder()
             .baseUrl("https://my-json-server.typicode.com/GithubGenericUsername/find-your-pet/")
             .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json")))
             .build()
 
+        //"retrofit" instance is used here to create ContactRemoteService, which is the service that will help us make network requests.
         val contactRemoteService = retrofit.create(ContactRemoteService::class.java)
 
         ContactRepository(contactsDao, contactRemoteService)
